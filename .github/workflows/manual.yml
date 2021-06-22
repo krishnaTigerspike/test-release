@@ -24,4 +24,8 @@ jobs:
 
       - name: Bump up the version
         run: npm version patch
-        shell: bash
+        env:
+          AUTHOR_EMAIL: krishna.adhikari@tigerspike.com
+          AUTHOR_NAME: krishnaTigerspike
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOG_LEVEL: debug
