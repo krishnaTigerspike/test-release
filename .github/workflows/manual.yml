@@ -28,4 +28,5 @@ jobs:
           AUTHOR_EMAIL: krishna.adhikari@tigerspike.com
           AUTHOR_NAME: krishnaTigerspike
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXECUTE: "true"
           LOG_LEVEL: debug
