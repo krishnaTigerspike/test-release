@@ -21,6 +21,5 @@ jobs:
     steps:
     # Runs a single command using the runners shell
        - name: Bump up the version
-         with:
-            path: package.json
-            run: npm version patch
+         run: npm version patch
+         shell: bash
