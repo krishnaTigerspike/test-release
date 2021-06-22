@@ -20,7 +20,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
-       - with:
-          path: package.json
        - name: Bump up the version
-         run: npm version patch
+         with:
+            path: package.json
+            run: npm version patch
