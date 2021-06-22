@@ -24,4 +24,4 @@ jobs:
 
       - name: Bump up the version
         run: npm version patch
-         shell: bash
+        shell: bash
