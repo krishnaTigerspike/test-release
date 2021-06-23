@@ -32,6 +32,11 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
+          
+      - name: Update config
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
         
       - name: Bump release version
         run: |
