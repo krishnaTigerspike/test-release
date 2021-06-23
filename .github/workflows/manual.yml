@@ -44,5 +44,7 @@ jobs:
       - name: Bump release version
         run: |
           npm version patch
-          git push origin ${{ steps.vars.outputs.branch }} --tags
+          git tag  ${{ steps.vars.outputs.tag }}
+          git push origin ${{ steps.vars.outputs.tag }}
+
        
