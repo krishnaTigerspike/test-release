@@ -21,6 +21,11 @@ jobs:
     steps:
     # Runs a single command using the runners shell
       - uses: actions/checkout@v2
+      
+      - name: Update config
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
 
       - name: Bump up the version
         run: npm version patch
