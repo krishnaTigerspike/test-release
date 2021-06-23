@@ -20,18 +20,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
-      - uses: actions/checkout@v2
-      
-      - name: Update config
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-      - name: Bump up the version
-        run: npm version patch
+      - name:  'Automated Version Bump'
+        uses:  'phips28/gh-action-bump-version@master'
         env:
-          AUTHOR_EMAIL: krishna.adhikari@tigerspike.com
-          AUTHOR_NAME: krishnaTigerspike
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EXECUTE: "true"
-          LOG_LEVEL: debug
+        with:
+          target-branch: 'master'
