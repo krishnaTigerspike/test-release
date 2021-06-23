@@ -24,7 +24,9 @@ jobs:
       
       - name: Set output
         id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        run: |
+          echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+          echo ::set-output name=branch::${GITHUB_REF##*/} 
         
       - name: Check output
         env:
@@ -32,6 +34,7 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
+          echo ${{ steps.vars.outputs.branch }}
           
       - name: Update config
         run: |
@@ -41,7 +44,5 @@ jobs:
       - name: Bump release version
         run: |
           npm version patch
-          git add .
-          git commit -m "updated package.json"
-          git push
+          git push origin ${{ steps.vars.outputs.branch }} --tags
        
