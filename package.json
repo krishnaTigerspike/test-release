@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bump-version": "standard-version"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/krishnaTigerspike/test-release/issues"
   },
-  "homepage": "https://github.com/krishnaTigerspike/test-release#readme"
+  "homepage": "https://github.com/krishnaTigerspike/test-release#readme",
+  "devDependencies": {
+    "standard-version": "^9.3.0"
+  }
 }
