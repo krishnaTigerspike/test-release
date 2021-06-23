@@ -34,8 +34,9 @@ jobs:
           echo ${{ steps.vars.outputs.tag }}
         
       - name: Bump release version
-        id: bump_version
-        uses: christian-draeger/increment-semantic-version@1.0.2
-        with:
-          current-version: ${{ steps.vars.outputs.tag }}
-          version-fragment: 'bug'
+        run: |
+          npm version patch
+          git add .
+          git commit -m "updated package.json"
+          git push
+       
