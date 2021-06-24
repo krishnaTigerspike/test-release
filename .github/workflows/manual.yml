@@ -16,8 +16,6 @@ jobs:
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - id: test
-        run: echo ${GITHUB_REF#refs/heads/
         
       - uses: actions/checkout@v2
       
