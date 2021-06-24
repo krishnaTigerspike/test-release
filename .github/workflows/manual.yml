@@ -55,10 +55,6 @@ jobs:
             ${{ runner.os }}-node-
        
         
-      - name: Get Bumped Semantic Version
-        id: bsv
-        uses: ./
-        with:
-          semantic-version: ${{ steps.vars.outputs.tag }}
-          version-type: 'MINOR'
+      - name: Bump Version
+        uses: opspresso/action-version@master
        
