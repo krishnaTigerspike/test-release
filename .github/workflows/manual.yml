@@ -1,33 +1,28 @@
-# This is a basic workflow that is manually triggered
+# This is a basic workflow that increments the version in package.json
 
-name: Test version bump workflow
+name: Package.json version bump
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
+# Triggerd everytime a tag is created
 on:
   create:
     tags:
       -**
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
+  # This workflow contains a single job called "bump-version"
   bump-version:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
-    
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
       - uses: actions/checkout@v2
       
       - name: Set output
         id: vars
         run: |
           echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-          echo ::set-output name=branch::${GITHUB_REF##*/} 
-          echo ${{ github }}
+          echo ${{ toJSON(github) }}
         
       - name: Check output
         env:
@@ -44,7 +39,7 @@ jobs:
             prop_path: 'version'
       - run: echo ${{steps.version.outputs.prop}} 
 
-      - name: Create release branch
+      - name: Create tag branch
         run: git checkout -b tag/${{ steps.vars.outputs.tag }}
         
       - name: Initialize mandatory git config
@@ -52,6 +47,7 @@ jobs:
          git config user.name "GitHub Actions"
          git config user.email noreply@github.com
 
+      # This is to cache dependencies and build outputs so that the subsequent builds are quicker
       - uses: actions/cache@v2
         with:
           path: ~/.npm
@@ -59,11 +55,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
             
-      - name: Change version number and name
+      - name: Update version number
         run: | 
           npm version patch -no-git-tag-version --force
           
-      - name: Commit changelog and manifest files
+      - name: Commit package.json file
         id: make-commit
         run: |
           git add package.json
