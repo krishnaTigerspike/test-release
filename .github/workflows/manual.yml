@@ -22,7 +22,7 @@ jobs:
         id: vars
         run: |
           echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-          echo ${{ toJSON(github) }}
+          echo ${{ github.event.master_branch }}
         
       - name: Check output
         env:
@@ -73,7 +73,7 @@ jobs:
         with:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          head: tag/${{ steps.vars.outputs.tag }}
-         base: master
+         base: ${{ github.event.master_branch }}
          title: tag/${{ steps.vars.outputs.tag }} into release/mundleberry
          reviewers: ${{ github.event.issue.user.login }}
          body: |
