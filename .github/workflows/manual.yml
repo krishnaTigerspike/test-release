@@ -34,18 +34,14 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
-          echo ${{ steps.vars.outputs.branch }}
-          echo ${{ github.ref }}
-          
-      - name: Update config
+
+      - name: Create release branch
+        run: git checkout -b tag/${{ steps.vars.outputs.tag }}
+        
+      - name: Initialize mandatory git config
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
+         git config user.name "GitHub Actions"
+         git config user.email noreply@github.com
 
       - uses: actions/cache@v2
         with:
@@ -53,8 +49,31 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-       
+            
+      - name: Change version number and name
+        run: | 
+          npm version patch
+          
+      - name: Commit changelog and manifest files
+        id: make-commit
+        run: |
+          git add package.json
+          git commit -m "updated version to ${{ steps.vars.outputs.tag }}"
+          
+      - name: Push new branch
+        run: git push origin tag/${{ steps.vars.outputs.tag }}
         
-      - name: Bump Version
-        uses: opspresso/action-version@master
+      - name: Create pull request into main
+        uses: thomaseizinger/create-pull-request@1.0.0
+        with:
+         GITHUB_TOKEN: ${{ secrets.TOKEN }}
+         head: tag/${{ steps.vars.outputs.tag }}
+         base: release/mundleberry
+         title: tag/${{ steps.vars.outputs.tag }} into release/mundleberry
+         reviewers: ${{ github.event.issue.user.login }}
+         body: |
+           Hi!
+           This PR was created in response workflow running.
+           I've updated the version and code commit: ${{ steps.make-commit.outputs.commit }}.
+       
        
