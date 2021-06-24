@@ -59,6 +59,6 @@ jobs:
         id: bsv
         uses: ./
         with:
-          semantic-version: ${{ steps.lrb.outputs.last-semver }}
+          semantic-version: ${{ steps.vars.outputs.tag }}
           version-type: 'MINOR'
        
