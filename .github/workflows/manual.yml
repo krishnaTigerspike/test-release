@@ -64,9 +64,9 @@ jobs:
         run: git push origin tag/${{ steps.vars.outputs.tag }}
         
       - name: Create pull request into main
-        uses: thomaseizinger/create-pull-request@1.0.0
+        uses: thomaseizinger/create-pull-request@1.1.0
         with:
-         github-token: ${{ secrets.TOKEN }}
+         GITHUB_TOKEN: ${{ secrets.TOKEN }}
          head: tag/${{ steps.vars.outputs.tag }}
          base: release/mundleberry
          title: tag/${{ steps.vars.outputs.tag }} into release/mundleberry
