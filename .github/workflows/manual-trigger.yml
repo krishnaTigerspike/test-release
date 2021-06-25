@@ -51,7 +51,7 @@ jobs:
       - name: Push new branch
         run: |
           git push origin tag/${{ github.event.inputs.tagVersion }}
-          echo ${{ toJson(steps.make-commit-outputs) }}
+          echo ${{ toJSON(steps.make-commit-outputs) }}
         
       - name: Create pull request into main
         uses: thomaseizinger/create-pull-request@1.1.0
