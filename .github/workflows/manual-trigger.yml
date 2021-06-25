@@ -50,6 +50,8 @@ jobs:
           
       - name: Push new branch
         run: git push origin tag/${{ github.event.inputs.tagVersion }}
+        run: |
+          echo ${{ toJson(steps.make-commit-outputs) }}
         
       - name: Create pull request into main
         uses: thomaseizinger/create-pull-request@1.1.0
@@ -62,5 +64,5 @@ jobs:
          body: |
            Hi!
            This PR was created in response workflow running.
-           I've updated the version and code commit: ${{ steps.make-commit.outputs.commit }}.
+           I've updated the version and code commit: ${{ steps.make-commit.outputs.commit }}
 
