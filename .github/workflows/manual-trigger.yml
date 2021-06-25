@@ -49,8 +49,8 @@ jobs:
           git commit -m "updated version to ${{ github.event.inputs.semanticUpgrade }}"
           
       - name: Push new branch
-        run: git push origin tag/${{ github.event.inputs.tagVersion }}
         run: |
+          git push origin tag/${{ github.event.inputs.tagVersion }}
           echo ${{ toJson(steps.make-commit-outputs) }}
         
       - name: Create pull request into main
